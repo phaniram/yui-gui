@@ -1,0 +1,701 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+
+<Form version="1.7" maxVersion="1.7">
+  <NonVisualComponents>
+    <Container class="javax.swing.JPanel" name="mainPanel">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="mainPanel" noResource="true"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[1000, 370]"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="tree" min="-2" pref="340" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="303" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jScrollPane1" alignment="0" pref="513" max="32767" attributes="1"/>
+                      <Component id="jScrollPane2" alignment="1" pref="513" max="32767" attributes="1"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="settings" min="-2" max="-2" attributes="3"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="tree" alignment="0" pref="412" max="32767" attributes="1"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane2" pref="181" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="203" max="-2" attributes="0"/>
+              </Group>
+              <Component id="settings" alignment="0" max="32767" attributes="1"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JScrollPane" name="tree">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="tree" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTree" name="fileDrop">
+              <Properties>
+                <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.editors2.TreeModelEditor">
+                  <TreeModel code="files&#xa; sad&#xa;&#xa;"/>
+                </Property>
+                <Property name="cellRenderer" type="javax.swing.tree.TreeCellRenderer" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="new MyRenderer()" type="code"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="fileDrop" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="valueChanged" listener="javax.swing.event.TreeSelectionListener" parameters="javax.swing.event.TreeSelectionEvent" handler="fileDropValueChanged"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="rootNode = new DefaultMutableTreeNode(&quot;files&quot;);&#xa;defaultTreeModel  = new DefaultTreeModel( rootNode );&#xa;fileDrop.setModel(defaultTreeModel);&#xa;&#xa;&#xa;&#xa;cssSet = new HashSet&lt;String&gt;();&#xa;jsSet = new HashSet&lt;String&gt;();&#xa;totalSet = new HashSet&lt;String&gt;();&#xa;&#xa;new FileDrop( fileDrop, new FileDrop.Listener()&#xa;        {   public void filesDropped( java.io.File[] files )&#xa;            {   &#xa;               for( int i = 0; i &lt; files.length; i++ )&#xa;                {   try&#xa;                    {   &#xa;                       String filePath=files[i].getCanonicalPath();&#xa;                       String type=filePath.substring(filePath.lastIndexOf(&apos;.&apos;)+1);&#xa;                    boolean isCSS=    type.equalsIgnoreCase(&quot;css&quot;);&#xa;                    boolean isJS=     type.equalsIgnoreCase(&quot;js&quot;);&#xa;&#xa;                        if(isCSS)&#xa;                            {&#xa;                           cssSet.add(filePath);&#xa;                            }else if(isJS)&#xa;                            {&#xa;                            jsSet.add(filePath);&#xa;                            }&#xa;                        if(((isCSS || isJS) &amp;&amp; !totalSet.contains(filePath))|| files[i].isDirectory())&#xa;                        {&#xa;                            defaultTreeModel.insertNodeInto(  new DefaultMutableTreeNode(filePath), rootNode, rootNode.getChildCount());&#xa;                            totalSet.add(filePath);&#xa;                        }&#xa;                        else&#xa;                            {&#xa;                               System.out.println(&quot;Duplicate&quot;);&#xa;                            }&#xa;                    }   // end try&#xa;                    catch( java.io.IOException e ) {}&#xa;                    fileDrop.expandRow(0);&#xa;                    items.setText(&quot;         &quot;+totalSet.size()+&quot; Items&quot;);&#xa;                //   System.out.println(&quot;Root ---&gt; &quot;+((DefaultTreeModel)fileDrop.getModel()).getRoot());&#xa;                //     fileDrop.setRootVisible(false);&#xa;                &#xa;                 //       fileDrop.setCellRenderer(new MyRenderer());&#xa;                }   // end for: through each dropped file&#xa;            }   // end filesDropped&#xa;        }); // end FileDrop.Listener"/>
+                <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="private javax.swing.tree.DefaultMutableTreeNode rootNode;&#xa;private javax.swing.tree.DefaultTreeModel defaultTreeModel;&#xa;private java.util.Set&lt;String&gt; cssSet;&#xa;private java.util.Set&lt;String&gt; jsSet;&#xa;private java.util.Set&lt;String&gt; totalSet;"/>
+              </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="settings">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder/>
+              </Border>
+            </Property>
+            <Property name="name" type="java.lang.String" value="settings" noResource="true"/>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="charsetLabel" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="charset" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="rewriteRadio" alignment="0" max="32767" attributes="1"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="suffixRadio" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="suffix" min="-2" pref="39" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="linebr" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="lineBreak" min="-2" pref="31" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="10" pref="10" max="10" attributes="0"/>
+                                              <Component id="destination" min="-2" pref="226" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="nomunge" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                      <Component id="preserve_semi" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="disable_optimizations" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="suffixRadio" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+                                  <Component id="suffix" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="rewriteRadio" min="-2" pref="15" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="charsetLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="charset" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="nomunge" min="-2" pref="14" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="preserve_semi" min="-2" pref="14" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="disable_optimizations" min="-2" pref="14" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="linebr" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lineBreak" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="jLabel7" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="jLabel6" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="destination" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="104" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLabel1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jLabel1.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
+                <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel2">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jLabel2.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel2.text"/>
+                <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="suffixRadio">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="buttonGroup"/>
+                </Property>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="suffixRadio.text"/>
+                <Property name="name" type="java.lang.String" value="suffixRadio" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="suffixRadioActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="rewriteRadio">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="buttonGroup"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="rewriteRadio.text"/>
+                <Property name="name" type="java.lang.String" value="rewriteRadio" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rewriteRadioActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="suffix">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="suffix.text"/>
+                <Property name="name" type="java.lang.String" value="suffix" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="suffixKeyReleased"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel3">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jLabel3.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel3.text"/>
+                <Property name="name" type="java.lang.String" value="jLabel3" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="nomunge">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="nomunge.text"/>
+                <Property name="name" type="java.lang.String" value="nomunge" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nomungeActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="preserve_semi">
+              <Properties>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="preserve_semi.text"/>
+                <Property name="name" type="java.lang.String" value="preserve_semi" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="preserve_semiActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="disable_optimizations">
+              <Properties>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="disable_optimizations.text"/>
+                <Property name="name" type="java.lang.String" value="disable_optimizations" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="disable_optimizationsActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="charsetLabel">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="charsetLabel.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="charsetLabel.text"/>
+                <Property name="name" type="java.lang.String" value="charsetLabel" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="charset">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="2">
+                    <StringItem index="0" value="UTF-8"/>
+                    <StringItem index="1" value="ISO-8859-1"/>
+                  </StringArray>
+                </Property>
+                <Property name="name" type="java.lang.String" value="charset" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="charsetItemStateChanged"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel4">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jLabel4.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel4.text"/>
+                <Property name="name" type="java.lang.String" value="jLabel4" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="destination">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="2">
+                    <StringItem index="0" value="Source folder"/>
+                    <StringItem index="1" value="Destination folder"/>
+                  </StringArray>
+                </Property>
+                <Property name="name" type="java.lang.String" value="destination" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="destinationActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="linebr">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="linebr.text"/>
+                <Property name="name" type="java.lang.String" value="linebr" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="linebrActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="lineBreak">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="lineBreak.text"/>
+                <Property name="name" type="java.lang.String" value="lineBreak" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="lineBreakKeyReleased"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lineBreak.setEnabled(false);"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel6">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="jLabel6.text"/>
+                <Property name="name" type="java.lang.String" value="jLabel6" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel7">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jLabel7.icon"/>
+                <Property name="name" type="java.lang.String" value="jLabel7" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JLabel" name="jLabel5">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jLabel5.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="jLabel5.text"/>
+            <Property name="name" type="java.lang.String" value="jLabel5" noResource="true"/>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jScrollPane2" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="stats">
+              <Properties>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                  <Table columnCount="5" rowCount="0">
+                    <Column editable="false" title="inFile" type="java.lang.Object"/>
+                    <Column editable="false" title="outFile" type="java.lang.Object"/>
+                    <Column editable="false" title="From (KB)" type="java.lang.Integer"/>
+                    <Column editable="false" title="To (KB)" type="java.lang.Integer"/>
+                    <Column editable="false" title="%" type="java.lang.Integer"/>
+                  </Table>
+                </Property>
+                <Property name="columnSelectionAllowed" type="boolean" value="true"/>
+                <Property name="name" type="java.lang.String" value="stats" noResource="true"/>
+                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                </Property>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="log">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="rows" type="int" value="5"/>
+                <Property name="name" type="java.lang.String" value="log" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JMenuBar" name="menuBar">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="menuBar" noResource="true"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="fileMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="fileMenu.text"/>
+            <Property name="name" type="java.lang.String" value="fileMenu" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+          </AuxValues>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="exitMenuItem">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="org.jdesktop.application.Application" id="quit" methodName="quit"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="exitMenuItem.icon"/>
+                <Property name="name" type="java.lang.String" value="exitMenuItem" noResource="true"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+              </AuxValues>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="helpMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="helpMenu.text"/>
+            <Property name="name" type="java.lang.String" value="helpMenu" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+          </AuxValues>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="aboutMenuItem">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="yui_compressor.Cyp_yui_compressorView" id="showAboutBox" methodName="showAboutBox"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="aboutMenuItem.icon"/>
+                <Property name="name" type="java.lang.String" value="aboutMenuItem" noResource="true"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+              </AuxValues>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="statusPanel">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="statusPanel" noResource="true"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[980, 25]"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
+                          <Component id="statusMessageLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="579" max="-2" attributes="0"/>
+                          <Component id="statusPanelSeparator" pref="1" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="463" max="-2" attributes="0"/>
+                          <Component id="statusAnimationLabel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="plus" min="-2" pref="26" max="-2" attributes="0"/>
+                          <EmptySpace min="8" pref="8" max="8" attributes="0"/>
+                          <Component id="minus" min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="items" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="clearButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="compressAllButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="470" max="-2" attributes="0"/>
+                          <Component id="progressBar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="progressBar" alignment="0" pref="25" max="32767" attributes="0"/>
+                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                          <Component id="clearButton" alignment="3" max="32767" attributes="1"/>
+                          <Component id="items" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="compressAllButton" alignment="3" max="32767" attributes="1"/>
+                      </Group>
+                      <Component id="minus" alignment="1" pref="25" max="32767" attributes="1"/>
+                      <Component id="plus" alignment="1" max="32767" attributes="1"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="statusPanelSeparator" min="-2" pref="2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="statusMessageLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="statusAnimationLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JSeparator" name="statusPanelSeparator">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="statusPanelSeparator" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="statusMessageLabel">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="statusMessageLabel" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="statusAnimationLabel">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="name" type="java.lang.String" value="statusAnimationLabel" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="clearButton">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="clearButton.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="clearButton.text"/>
+            <Property name="name" type="java.lang.String" value="clearButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="compressAllButton">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="compressAllButton.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="compressAllButton.text"/>
+            <Property name="name" type="java.lang.String" value="compressAllButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="compressAllButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="items">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="items.text"/>
+            <Property name="name" type="java.lang.String" value="items" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="plus">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="plus.icon"/>
+            <Property name="name" type="java.lang.String" value="plus" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="plus.setEnabled(false);"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="minus">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="minus.icon"/>
+            <Property name="name" type="java.lang.String" value="minus" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="minus.setEnabled(false);"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JProgressBar" name="progressBar">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="progressBar" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPopupMenu" name="options">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="options" noResource="true"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <MenuItem class="javax.swing.JMenuItem" name="Remove">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="Remove.text"/>
+            <Property name="name" type="java.lang.String" value="Remove" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RemoveActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem()"/>
+          </AuxValues>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="Combine">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="Combine.text"/>
+            <Property name="name" type="java.lang.String" value="Combine" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CombineActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="Combine.setVisible(false);"/>
+          </AuxValues>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="Compress">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="Compress.text"/>
+            <Property name="name" type="java.lang.String" value="Compress" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CompressActionPerformed"/>
+          </Events>
+        </MenuItem>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup">
+    </Component>
+  </NonVisualComponents>
+  <Properties>
+    <Property name="component" type="javax.swing.JComponent" editor="org.netbeans.modules.form.ComponentChooserEditor">
+      <ComponentRef name="mainPanel"/>
+    </Property>
+    <Property name="menuBar" type="javax.swing.JMenuBar" editor="org.netbeans.modules.form.ComponentChooserEditor">
+      <ComponentRef name="menuBar"/>
+    </Property>
+    <Property name="statusBar" type="javax.swing.JComponent" editor="org.netbeans.modules.form.ComponentChooserEditor">
+      <ComponentRef name="statusPanel"/>
+    </Property>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-50,0,0,4,-118"/>
+  </AuxValues>
+</Form>
